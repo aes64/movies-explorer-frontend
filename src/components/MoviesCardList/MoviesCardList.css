@@ -1,0 +1,22 @@
+.movies__button-more {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  width: 320px;
+  height: 36px;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  background-color: inherit;
+  margin-top: 50px;
+  transition: opacity 0.3s ease-in-out 0.1s;
+}
+
+.movies__button-more:hover {
+  opacity: 0.8;
+}
+
+.movies__container {
+  display: flex;
+  justify-content: center;
+}

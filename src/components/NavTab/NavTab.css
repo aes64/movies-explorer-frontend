@@ -1,0 +1,34 @@
+.nav-tab__item {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: black;
+  transition: opacity 0.3s ease-in-out 0.1s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-tab__item:hover {
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .nav-tab__item {
+    font-size: 11px;
+  }
+}
+
+.nav-tab {
+  display: flex;
+  height: 70px;
+  justify-content: center;
+  margin-top: 19px;
+}
+
+.nav-tab__container {
+  display: flex;
+  width: 276px;
+  justify-content: space-between;
+}
