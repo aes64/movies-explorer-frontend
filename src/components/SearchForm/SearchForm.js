@@ -8,6 +8,7 @@ function SearchForm() {
       <div className='search__container'>
       <form className='search__form'>
         <div className='search__box'>
+          <div className='search__box-input'>
           <div className='search__icon'></div>
           <input
             className='search__input'
@@ -16,11 +17,13 @@ function SearchForm() {
             required
           ></input>
           </div>
-          <div className='search__box'>
+          
+            <div className='search__button-container'>
             <button type='submit' className='search__button'></button>
-            <div className='search__line'></div>
+            </div>
+            </div>
+
             <FilterCheckbox />
-          </div>
       </form>
       </div>
     </div>

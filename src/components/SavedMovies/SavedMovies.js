@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 
 function SavedMovies() {
   return (
-    <div className='saved-movies'>
+    <section className='saved-movies'>
       <SearchForm />
       <div className='saved-movies__container'>
         <div className='movie'>
@@ -44,7 +44,7 @@ function SavedMovies() {
           <p className='movie__duration'>1ч 42м</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

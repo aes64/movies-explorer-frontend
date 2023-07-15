@@ -18,6 +18,8 @@
 
 .checkbox {
   display: flex;
+  margin-left: 19px;
+  align-items: center;
 }
 
 .checkbox__label {
@@ -59,4 +61,11 @@
   line-height: 18px;
   color: #000000;
   margin: 0 30px 0 0;
+}
+
+@media screen and (max-width: 767px) {
+  .checkbox{
+    margin-top: 20px;
+  }
+ 
 }

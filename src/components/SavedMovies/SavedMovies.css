@@ -20,22 +20,21 @@
   .saved-movies__container {
     width: 100%;
     grid-template-columns: repeat(1, 1fr);
-    margin: 50px 10px 210px 10px;
+    margin: 50px 0 210px 0;
     gap: 34px;
   }
 }
 .movie__button-delete {
   background-image: url(../../images/delete.svg);
   background-repeat: no-repeat;
+  background-position: center;
   width: 9px;
   height: 9px;
   border: none;
   background-color: inherit;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out 0.1s;
-  padding: 0;
-  margin-right: 20px;
-  margin-top: 2px;
+  padding: 20px 20px;
 }
 
 .movie__button-delete:hover {

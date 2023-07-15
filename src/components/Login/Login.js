@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Login({ onSubmit }) {
 
   return (
-    <div className='auth'>
+    <section className='auth'>
       <div className='auth__container auth__container_indent'>
         <Link to='/'>
           <div className='logo logo_auth'></div>
@@ -46,7 +46,7 @@ function Login({ onSubmit }) {
           </p>
         </form>
       </section>
-    </div>
+    </section>
   );
 }
 
