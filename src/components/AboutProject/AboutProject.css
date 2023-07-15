@@ -21,7 +21,7 @@
   letter-spacing: -0.04em;
   border-bottom: 1px solid black;
   padding-bottom: 23px;
-  padding-top: 117px;
+  padding-top: 110px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -75,7 +75,7 @@
 
 .about__information {
   display: flex;
-  gap: 33px;
+  gap: 50px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {

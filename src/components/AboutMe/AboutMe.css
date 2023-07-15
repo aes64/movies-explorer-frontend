@@ -39,7 +39,9 @@
 }
 
 .about-me__photo {
-  background-image: url(../../images/IMG_1549.JPG);
+  background-image: url(../../images/IMG_1487.PNG);
+  background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   background-size:auto;
   border-radius: 10px;

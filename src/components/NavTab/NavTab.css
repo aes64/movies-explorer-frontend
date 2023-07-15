@@ -1,13 +1,24 @@
 .nav-tab__item {
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 16px;
   display: flex;
-  align-items: center;
-  color: black;
+  color: white;
   transition: opacity 0.3s ease-in-out 0.1s;
   cursor: pointer;
   text-decoration: none;
+  border-radius: 10px;
+  background-color: #E8E8E8;
+  min-width: 96px;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+
+}
+
+.nav-tab__item:last-child {
+  margin-right: 0;
 }
 
 .nav-tab__item:hover {
@@ -22,13 +33,12 @@
 
 .nav-tab {
   display: flex;
-  height: 70px;
   justify-content: center;
-  margin-top: 19px;
+  margin-top: 427px
 }
 
 .nav-tab__container {
   display: flex;
   width: 276px;
-  justify-content: space-between;
+  justify-content: center;
 }

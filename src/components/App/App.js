@@ -10,6 +10,7 @@ import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Error from '../Error/Error';
+import Popup from '../Popup/Popup';
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         </Switch>
       </main>
       {viewFooter && <Footer />}
+      <Popup></Popup>
     </div>
   );
 }

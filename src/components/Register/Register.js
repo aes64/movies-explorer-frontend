@@ -23,7 +23,7 @@ function Register({ onSubmit }) {
     onSubmit(data);
   };
   return (
-    <div className='auth'>
+    <section className='auth'>
       <div className='auth__container'>
         <Link to='/'>
           <div className='logo logo_auth'></div>
@@ -76,7 +76,7 @@ function Register({ onSubmit }) {
           </p>
         </form>
       </section>
-    </div>
+    </section>
   );
 }
 

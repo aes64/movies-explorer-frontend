@@ -1,14 +1,14 @@
 .movie {
-  width: 100%;
+  width: 96%;
   border-radius: 5px;
   background-color: rgba(253, 253, 253, 1);
   box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  margin: auto 2% auto 2%; 
 }
 
 .movie__image {
   width: 100%;
-  aspect-ratio: 16/9;
   object-fit: cover;
 }
 

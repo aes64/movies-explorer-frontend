@@ -3,7 +3,7 @@ import './AboutMe';
 
 function AboutMe() {
   return (
-    <div className='about-me' id='student'>
+    <section className='about-me' id='student'>
       <h1 className='about-me__title'>Студент</h1>
       <div className='about-me__container'>
         <div className='about-me__information'>
@@ -23,7 +23,7 @@ function AboutMe() {
         </div>
         <div className='about-me__photo'></div>
       </div>
-    </div>
+    </section>
   );
 }
 
