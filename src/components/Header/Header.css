@@ -12,6 +12,12 @@
   align-items: center;
   padding: 18px 70px 0 70px;
 }
+.header__main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .header__box {
   display: flex;
   flex-direction: row;
@@ -29,6 +35,10 @@
 
 .header__link:hover {
   opacity: 0.7;
+}
+
+.header__link:first-child {
+  margin-right: 30px;
 }
 
 .header__font {
