@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
 import './SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import {SEARCH_STRING, SHORTS_TOGGLE} from "../../utils/localStorageConstants";
 
-function SearchForm({ onSubmit }) {
-  const [searchString, setSearchString] = useState(null)
-  const onChange = (e) => {
+function SearchForm({ onSubmit, handleCheckboxToggle }) {
+  const [searchString, setSearchString] = useState(localStorage.getItem(SEARCH_STRING))
+  const [shortsToggle, setShortsToggle] = useState(localStorage.getItem(SHORTS_TOGGLE) === 'true');
+
+  const searchStringOnChange = (e) => {
     setSearchString(e.target.value);
   }
+
+  const shortsToggleOnChange = (e) => {
+    setShortsToggle((value) => {
+      const nextValue = !value
+      localStorage.setItem(SHORTS_TOGGLE, nextValue.toString());
+      handleCheckboxToggle();
+      return nextValue;
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(searchString);    
+    localStorage.setItem(SEARCH_STRING, searchString);
+    onSubmit(searchString);
   }
+
   return (
     <div className='search'>
       <div className='search__container'>
@@ -24,16 +39,16 @@ function SearchForm({ onSubmit }) {
             placeholder='Фильм'
             required
             value={searchString}
-            onChange={onChange}
+            onChange={searchStringOnChange}
           ></input>
           </div>
-          
+
           <div className='search__button-container'>
           <button type='submit' className='search__button'></button>
           </div>
           </div>
 
-          <FilterCheckbox />
+          <FilterCheckbox value={shortsToggle} onChange={shortsToggleOnChange}/>
       </form>
       </div>
     </div>
