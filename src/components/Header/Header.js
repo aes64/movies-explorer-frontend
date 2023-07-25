@@ -1,4 +1,3 @@
-import Popup from '../Popup/Popup';
 import './Header';
 import { Route, Link, Switch } from 'react-router-dom';
 

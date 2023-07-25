@@ -1,7 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import './Login';
 
 function Login({ onSubmit }) {
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, email, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+      [email]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(data);
+  };
 
   return (
     <section className='auth'>
@@ -12,7 +32,7 @@ function Login({ onSubmit }) {
         <h1 className='auth__welcome'>Рады видеть!</h1>
       </div>
       <section className='auth__section'>
-        <form className='auth__form'>
+        <form className='auth__form' onSubmit={handleChange}>
           <fieldset className='auth__info'>
             <label className='auth__label'>E-mail</label>
             <input
@@ -21,6 +41,8 @@ function Login({ onSubmit }) {
               type='text'
               name='email'
               required
+              value={data.email}
+              onChange={handleChange}
             />
             <label className='auth__label'>Пароль</label>
             <input
@@ -30,6 +52,8 @@ function Login({ onSubmit }) {
               name='password'
               minLength={4}
               required
+              value={data.password}
+              onChange={handleChange}
             />
           </fieldset>
           <button

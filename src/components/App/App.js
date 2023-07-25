@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from 'react-router-dom';
 import './App';
 import Header from '../Header/Header';
@@ -19,17 +19,34 @@ function App() {
     location.pathname === '/movies' ||
     location.pathname === '/saved-movies';
 
+  const handleSubmitRegistration = () => {
+
+  }
+
+  const handleLoginSubmit = () => {
+
+  }
   return (
     <div className='App'>
       <Header />
       <main>
         <Switch>
           <Route exact path='/' component={Main} />
-          <Route path='/signup' component={Register} />
-          <Route path='/signin' component={Login} />
-          <Route path='/movies' component={Movies} />
-          <Route path='/saved-movies' component={SavedMovies} />
-          <Route path='/profile' component={Profile} />
+          <Route path='/signup' onSubmit={handleSubmitRegistration}>
+            <Register/>
+          </Route>
+          <Route path='/signin' onSubmit={handleLoginSubmit}>
+            <Login/>
+          </Route>
+          <Route path='/movies'>
+            <Movies/>
+          </Route>
+          <Route path='/saved-movies'>
+            <SavedMovies/>
+          </Route>
+          <Route path='/profile'>
+            <Profile/>
+          </Route>
           <Route path='*'>
             <Error />
           </Route>
