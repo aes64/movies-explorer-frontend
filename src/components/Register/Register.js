@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import './Register';
+import {useFormWithValidation} from "./hooks";
+import mainApi from "../../utils/MainApi";
 
-function Register({ onSubmit }) {
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e) => {
-    const { name, email, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-      [email]: value,
-    });
-  };
-
+function Register() {
+  const { values: data, handleChange, errors, isValid, resetForm } = useFormWithValidation()
+  const history = useHistory();
+  const [error, setError] = useState('');
   const handleSubmit = (e) => {
+    setError('');
     e.preventDefault();
-    onSubmit(data);
+    mainApi.signUp({ name: data.name, email: data.email, password: data.password })
+      .then(() => {
+        history.push('/movies')
+      })
+      .catch((e) => {
+        setError('Ошибка регистрации');
+      })
   };
+
   return (
     <section className='auth'>
       <div className='auth__container'>
@@ -43,7 +41,7 @@ function Register({ onSubmit }) {
               name='name'
               required
             />
-            <span className='auth__validaton-message' id='name' >Слишком короткое имя</span>
+            {errors['name'] && <span className='auth__validaton-message' id='name'>{errors['name']}</span>}
             <label className='auth__label'>E-mail</label>
             <input
               value={data.email}
@@ -54,7 +52,7 @@ function Register({ onSubmit }) {
               name='email'
               required
             />
-            <span className='auth__validaton-message' id='email' >неверная почта</span>
+            {errors['email'] && <span className='auth__validaton-message' id='email'>{errors['email']}</span>}
             <label className='auth__label'>Пароль</label>
             <input
               value={data.password}
@@ -66,11 +64,12 @@ function Register({ onSubmit }) {
               minLength={4}
               required
             />
-            <span className='auth__validaton-message' id='password' >Что-то не так...</span>
+            {errors['password'] && <span className='auth__validaton-message' id='password' >{errors['password']}</span>}
           </fieldset>
           <button className='auth__submit-button' type='submit'>
             Зарегистрироваться
           </button>
+          {error && <div className='auth__validaton-message' id='email' >{error}</div>}
           <p className='auth__text'>
             Уже зарегистрированы?{' '}
             <Link to='/signin' className='auth__link'>

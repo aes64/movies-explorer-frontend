@@ -1,26 +1,23 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import './Login';
+import {useFormWithValidation} from "../Register/hooks";
+import mainApi from "../../utils/MainApi";
 
-function Login({ onSubmit }) {
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e) => {
-    const { name, email, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-      [email]: value,
-    });
-  };
-
+function Login() {
+  const { values: data, handleChange, errors, isValid, resetForm } = useFormWithValidation()
+  const history = useHistory();
+  const [error, setError] = useState('');
   const handleSubmit = (e) => {
+    setError('');
     e.preventDefault();
-    onSubmit(data);
+    mainApi.signIn({ email: data.email, password: data.password })
+      .then(() => {
+        history.push('/movies')
+      })
+      .catch((e) => {
+        setError('Ошибка авторизации');
+      })
   };
 
   return (
@@ -32,7 +29,7 @@ function Login({ onSubmit }) {
         <h1 className='auth__welcome'>Рады видеть!</h1>
       </div>
       <section className='auth__section'>
-        <form className='auth__form' onSubmit={handleChange}>
+        <form className='auth__form' onSubmit={handleSubmit}>
           <fieldset className='auth__info'>
             <label className='auth__label'>E-mail</label>
             <input
@@ -44,6 +41,7 @@ function Login({ onSubmit }) {
               value={data.email}
               onChange={handleChange}
             />
+            {errors['email'] && <span className='auth__validaton-message' id='email'>{errors['email']}</span>}
             <label className='auth__label'>Пароль</label>
             <input
               id='password-input'
@@ -55,6 +53,7 @@ function Login({ onSubmit }) {
               value={data.password}
               onChange={handleChange}
             />
+            {errors['password'] && <span className='auth__validaton-message' id='password' >{errors['password']}</span>}
           </fieldset>
           <button
             className='auth__submit-button auth__submit-button_indent'
@@ -62,6 +61,7 @@ function Login({ onSubmit }) {
           >
             Войти
           </button>
+          {error && <div className='auth__validaton-message' id='email' >{error}</div>}
           <p className='auth__text'>
             Ещё не зарегистрированы?{' '}
             <Link to='/signup' className='auth__link'>

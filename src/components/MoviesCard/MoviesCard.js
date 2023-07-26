@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import {useCallback, useState} from 'react';
 import './MoviesCard.css';
+import mainApi from "../../utils/MainApi";
 
 const prettifyDuration = duration => {
   if (!duration) return '';
@@ -10,11 +11,19 @@ const prettifyDuration = duration => {
   return [hours && hoursStr, minutes && minutesStr].filter(Boolean).join(' ');
 }
 
-function MoviesCard({ movie }) {
-  const [isLiked, setIsLiked] = useState(false);
-  const handleClickLike = () => {
-    setIsLiked(true);
-  };
+function MoviesCard({ movie, likeId }) {
+  const [isLiked, setIsLiked] = useState(!!likeId);
+  const handleClickLike = useCallback(() => {
+    if (isLiked) {
+      mainApi.setDislikeMovie(likeId).then(() => {
+        setIsLiked(false);
+      }).catch(() => {})
+    } else {
+      mainApi.setLikeMovie(movie).then(() => {
+        setIsLiked(true);
+      }).catch(() => {})
+    }
+  }, [isLiked, setIsLiked]);
 
   const redirectToTrailer = () => {
     let otherWindow = window.open();
