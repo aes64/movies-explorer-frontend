@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import './SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import {SEARCH_STRING, SHORTS_TOGGLE} from "../../utils/localStorageConstants";
@@ -11,14 +11,12 @@ function SearchForm({ onSubmit, handleCheckboxToggle }) {
     setSearchString(e.target.value);
   }
 
-  const shortsToggleOnChange = (e) => {
-    setShortsToggle((value) => {
-      const nextValue = !value
-      localStorage.setItem(SHORTS_TOGGLE, nextValue.toString());
-      handleCheckboxToggle();
-      return nextValue;
-    });
-  }
+  const shortsToggleOnChange = useCallback((e) => {
+    const nextValue = !shortsToggle
+    setShortsToggle(nextValue);
+    localStorage.setItem(SHORTS_TOGGLE, nextValue.toString());
+    handleCheckboxToggle();
+  }, [shortsToggle, setShortsToggle, handleCheckboxToggle])
 
   const handleSubmit = (e) => {
     e.preventDefault();

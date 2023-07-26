@@ -38,7 +38,7 @@ class MoviesApi {
     const shortsToggle = localStorage.getItem(SHORTS_TOGGLE) === 'true';
     let data = [];
     try {
-      data = JSON.parse(localStorage.getItem(SEARCH_RESULTS))
+      data = JSON.parse(localStorage.getItem(SEARCH_RESULTS)) || []
     } catch (e) {
       console.error('failed to parse result from localStorage');
     }

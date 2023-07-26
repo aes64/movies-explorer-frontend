@@ -1,16 +1,27 @@
 import './MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
+import {useResultSize} from "../Movies/hooks";
 
 function MoviesCardList({ movies }) {
-const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const resultSize = useResultSize();
+  const [totalSize, setTotalSize] = useState(resultSize);
+  const [pagedMovies, setPagedMovies] = useState(movies.slice(0, resultSize));
+  useEffect(() => {
+    setPagedMovies(movies.slice(0, totalSize))
+  }, [movies])
+  const loadMore = useCallback(() => {
+    setPagedMovies(movies.slice(0, totalSize + resultSize))
+    setTotalSize(totalSize + resultSize);
+  }, [setPagedMovies, movies, pagedMovies, resultSize])
+
   return (
     <div className='movies-list'>
       <div className='movies-card'>
-        {movies.map((movie) => <MoviesCard movie={movie}/>)}
+        {pagedMovies.map((movie) => <MoviesCard key={movie?.id} movie={movie}/>)}
       </div>
       <div className='movies__container'>
-        <button className='movies__button-more'>Ещё</button>
+        <button className='movies__button-more' onClick={loadMore}>Ещё</button>
       </div>
     </div>
   );
