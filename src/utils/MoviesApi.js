@@ -34,6 +34,7 @@ class MoviesApi {
   }
 
   getDataFromLocalStorage() {
+    //preloader on
     const searchString = localStorage.getItem(SEARCH_STRING);
     const shortsToggle = localStorage.getItem(SHORTS_TOGGLE) === 'true';
     let data = [];
@@ -41,6 +42,7 @@ class MoviesApi {
       data = JSON.parse(localStorage.getItem(SEARCH_RESULTS)) || []
     } catch (e) {
       console.error('failed to parse result from localStorage');
+      //smth going wrong
     }
     let result = data;
     if (shortsToggle) {
@@ -49,6 +51,7 @@ class MoviesApi {
     if (searchString) {
       result = result.filter((item) => (item?.nameRU?.toLowerCase()?.includes(searchString?.toLowerCase()) || item?.nameEN?.toLowerCase()?.includes(searchString?.toLowerCase())));
     }
+    //preloader off
     return result;
   }
 }

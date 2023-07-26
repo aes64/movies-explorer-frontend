@@ -7,6 +7,7 @@ function MoviesCardList({ movies }) {
   const resultSize = useResultSize();
   const [totalSize, setTotalSize] = useState(resultSize);
   const [pagedMovies, setPagedMovies] = useState(movies.slice(0, resultSize));
+  
   useEffect(() => {
     setPagedMovies(movies.slice(0, totalSize))
   }, [movies])

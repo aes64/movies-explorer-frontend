@@ -43,6 +43,7 @@ function Register({ onSubmit }) {
               name='name'
               required
             />
+            <span className='auth__validaton-message' id='name' >Слишком короткое имя</span>
             <label className='auth__label'>E-mail</label>
             <input
               value={data.email}
@@ -53,6 +54,7 @@ function Register({ onSubmit }) {
               name='email'
               required
             />
+            <span className='auth__validaton-message' id='email' >неверная почта</span>
             <label className='auth__label'>Пароль</label>
             <input
               value={data.password}
@@ -64,6 +66,7 @@ function Register({ onSubmit }) {
               minLength={4}
               required
             />
+            <span className='auth__validaton-message' id='password' >Что-то не так...</span>
           </fieldset>
           <button className='auth__submit-button' type='submit'>
             Зарегистрироваться

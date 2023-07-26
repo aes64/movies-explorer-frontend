@@ -11,6 +11,7 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Error from '../Error/Error';
 import Popup from '../Popup/Popup';
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   const location = useLocation();
@@ -54,6 +55,7 @@ function App() {
       </main>
       {viewFooter && <Footer />}
       <Popup></Popup>
+      <Preloader></Preloader>
     </div>
   );
 }
