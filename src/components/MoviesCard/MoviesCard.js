@@ -16,12 +16,18 @@ function MoviesCard({ movie }) {
     setIsLiked(true);
   };
 
+  const redirectToTrailer = () => {
+    let otherWindow = window.open();
+    otherWindow.location = movie.trailerLink;
+  }
+
   return (
-    <div className='movie'>
+    <div className='movie' >
       <img
         src={`https://api.nomoreparties.co${movie?.image?.url}`}
         className='movie__image'
         alt='Постер к фильму'
+        onClick={redirectToTrailer}
       />
       <div className='movie__container'>
         <h2 className='movie__title'>{movie?.nameRU}</h2>

@@ -94,7 +94,7 @@
     min-width: 262px;
   }
   .movie__image{
-    min-width: 339px;
+    max-width: 339px;
     max-height: 190px;
   }
 }

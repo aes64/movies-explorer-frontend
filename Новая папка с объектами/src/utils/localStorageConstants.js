@@ -1,3 +1,0 @@
-export const SEARCH_STRING = 'SEARCH_STRING';
-export const SHORTS_TOGGLE = 'SHORTS_TOGGLE';
-export const SEARCH_RESULTS = 'SEARCH_RESULTS';

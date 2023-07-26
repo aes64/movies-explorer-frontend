@@ -3,7 +3,6 @@ import './Movies';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import moviesApi from '../../utils/MoviesApi';
-import {useResultSize} from "./hooks";
 
 function Movies() {
   const [movies, setMovies] = useState(moviesApi.getDataFromLocalStorage());

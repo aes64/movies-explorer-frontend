@@ -1,7 +1,12 @@
 import './Header';
 import { Route, Link, Switch } from 'react-router-dom';
+import Popup from '../Popup/Popup'
 
 function Header() {
+  const openPopupMenu = () => {
+    console.log('hi');
+  
+  }
   return (
     <header className='header'>
       <Switch>
@@ -27,7 +32,7 @@ function Header() {
           <Link to='/'>
             <div className='logo'></div>
           </Link>
-          <div className='header__burger'></div>
+          <div className='header__burger' onClick={openPopupMenu}></div>
           <div className='header__box'>
             <Link to='/movies' className='header__font'>
               Фильмы

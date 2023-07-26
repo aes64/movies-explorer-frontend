@@ -34,6 +34,10 @@
   align-items:center ;
 }
 
+.popup:active {
+  border-bottom: 1px solid gray;
+}
+
 .popup__button-close {
   border: none;
   background-image: url(../../images/delete.svg);

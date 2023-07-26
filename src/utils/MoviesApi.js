@@ -11,18 +11,6 @@ class MoviesApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  /*
-  get _headers() {
-    const token = localStorage.getItem("token");
-    let defaultHeaders = {
-      "Content-Type": "application/json"
-    }
-    if (token) {
-      defaultHeaders['Authorization'] = `Bearer ${token}`;
-    }
-    return defaultHeaders;
-  }
-  */
 
   getMoviesData() {
     return fetch(`${this._link}`, { headers: this._headers }).then(
@@ -34,7 +22,6 @@ class MoviesApi {
   }
 
   getDataFromLocalStorage() {
-    //preloader on
     const searchString = localStorage.getItem(SEARCH_STRING);
     const shortsToggle = localStorage.getItem(SHORTS_TOGGLE) === 'true';
     let data = [];
@@ -42,7 +29,6 @@ class MoviesApi {
       data = JSON.parse(localStorage.getItem(SEARCH_RESULTS)) || []
     } catch (e) {
       console.error('failed to parse result from localStorage');
-      //smth going wrong
     }
     let result = data;
     if (shortsToggle) {
@@ -51,7 +37,6 @@ class MoviesApi {
     if (searchString) {
       result = result.filter((item) => (item?.nameRU?.toLowerCase()?.includes(searchString?.toLowerCase()) || item?.nameEN?.toLowerCase()?.includes(searchString?.toLowerCase())));
     }
-    //preloader off
     return result;
   }
 }
