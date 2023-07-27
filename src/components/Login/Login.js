@@ -29,7 +29,7 @@ function Login() {
         <h1 className='auth__welcome'>Рады видеть!</h1>
       </div>
       <section className='auth__section'>
-        <form className='auth__form' onSubmit={handleSubmit}>
+        <form className='auth__form' onSubmit={handleSubmit} noValidate>
           <fieldset className='auth__info'>
             <label className='auth__label'>E-mail</label>
             <input

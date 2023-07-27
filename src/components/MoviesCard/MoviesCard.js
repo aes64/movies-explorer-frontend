@@ -11,7 +11,7 @@ const prettifyDuration = duration => {
   return [hours && hoursStr, minutes && minutesStr].filter(Boolean).join(' ');
 }
 
-function MoviesCard({ movie, likeId }) {
+function MoviesCard({ movie, likeId, likeType = 'heart' }) {
   const [isLiked, setIsLiked] = useState(!!likeId);
   const handleClickLike = useCallback(() => {
     if (isLiked) {
@@ -29,11 +29,12 @@ function MoviesCard({ movie, likeId }) {
     let otherWindow = window.open();
     otherWindow.location = movie.trailerLink;
   }
+  const imgUrl = typeof movie?.image === 'string' ? movie?.image : `https://api.nomoreparties.co${movie?.image?.url}`;
 
   return (
     <div className='movie' >
       <img
-        src={`https://api.nomoreparties.co${movie?.image?.url}`}
+        src={imgUrl}
         className='movie__image'
         alt='Постер к фильму'
         onClick={redirectToTrailer}
@@ -41,13 +42,14 @@ function MoviesCard({ movie, likeId }) {
       <div className='movie__container'>
         <h2 className='movie__title'>{movie?.nameRU}</h2>
         <div className='movie__like-container'>
-          <button
+          {likeType === 'heart' ? <button
             className={`movie__like-button ${
               isLiked ? 'movie__like-button_active' : 'movie__like-button'
             } `}
             type='button'
             onClick={handleClickLike}
-          />
+          /> :
+          <button className='movie__button-delete' type='button' onClick={handleClickLike}/>}
         </div>
       </div>
       <p className='movie__duration'>{prettifyDuration(movie?.duration)}</p>

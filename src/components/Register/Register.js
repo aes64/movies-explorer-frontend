@@ -29,7 +29,7 @@ function Register() {
         <h1 className='auth__welcome'>Добро пожаловать!</h1>
       </div>
       <section className='auth__section'>
-        <form className='auth__form' onSubmit={handleSubmit}>
+        <form className='auth__form' onSubmit={handleSubmit} noValidate>
           <fieldset className='auth__info'>
             <label className='auth__label'>Имя</label>
             <input

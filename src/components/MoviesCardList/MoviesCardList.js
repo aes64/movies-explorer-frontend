@@ -11,7 +11,7 @@ function MoviesCardList({ movies }) {
   const likedMovies = useMemo(() => {
     let res = [];
     try {
-      res = JSON.parse(localStorage.getItem(LIKED_MOVIES));
+      res = JSON.parse(localStorage.getItem(LIKED_MOVIES)) || [];
     } catch(e) {}
     return res;
   }, [localStorage.getItem(LIKED_MOVIES)])

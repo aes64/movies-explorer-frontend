@@ -1,12 +1,18 @@
 import './Header';
 import { Route, Link, Switch } from 'react-router-dom';
 import Popup from '../Popup/Popup'
+import { useState } from 'react';
 
 function Header() {
+  const [narrowWindow, setNarrowWindow] = useState(false);
   const openPopupMenu = () => {
-    console.log('hi');
-  
+    setNarrowWindow(true);
   }
+
+  const closePopup = () => {
+    setNarrowWindow(false)
+  }
+ 
   return (
     <header className='header'>
       <Switch>
@@ -49,6 +55,7 @@ function Header() {
           </div>
         </Route>
       </Switch>
+      {narrowWindow && <Popup closePopup={closePopup}/>}
     </header>
   );
 }

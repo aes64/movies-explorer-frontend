@@ -20,7 +20,6 @@ function SearchForm({ onSubmit, handleCheckboxToggle }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem(SEARCH_STRING, searchString);
     onSubmit(searchString);
   }
 

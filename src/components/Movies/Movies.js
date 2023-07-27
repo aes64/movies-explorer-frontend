@@ -4,13 +4,15 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import moviesApi from '../../utils/MoviesApi';
 import Preloader from "../Preloader/Preloader";
+import {SEARCH_STRING} from "../../utils/localStorageConstants";
 
 function Movies() {
   const [movies, setMovies] = useState(moviesApi.getDataFromLocalStorage());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSearchMovie = () => {
+  const handleSearchMovie = (str) => {
+    localStorage.setItem(SEARCH_STRING, str);
     setLoading(true);
     setError('');
     return moviesApi

@@ -14,6 +14,7 @@ import Popup from '../Popup/Popup';
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {AUTH_TOKEN} from "../../utils/localStorageConstants";
 import MainApi from "../../utils/MainApi";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
   const viewFooter =
     location.pathname === '/' ||
     location.pathname === '/movies' ||
@@ -36,7 +38,7 @@ function App() {
           if (res) {
             setEmail(res?.email);
             setLoggedIn(true);
-            history.push('/movies')
+            setCurrentUser(res)
           }
         })
         .catch((err) => {
@@ -62,6 +64,7 @@ function App() {
   }, [loggedIn]);
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className='App'>
       <Header />
       <main>
@@ -82,8 +85,8 @@ function App() {
         </Switch>
       </main>
       {viewFooter && <Footer />}
-      <Popup></Popup>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

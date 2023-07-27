@@ -1,14 +1,14 @@
 import './Popup';
 import { Route, Link} from 'react-router-dom';
 
-function Popup() {
+function Popup({closePopup}) {
   return (
     <div className='popup'>
       <div className='popup__menu'>
         
         <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
         <div className='popup__links'>
-        <button className='popup__button-close'></button>
+        <button className='popup__button-close' onClick={closePopup}></button>
           <Link to='/' className='header__font'>
               Главная
             </Link>

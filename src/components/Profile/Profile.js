@@ -1,3 +1,4 @@
+import React from 'react';
 import './Profile.css';
 import {
   AUTH_TOKEN,
@@ -6,8 +7,11 @@ import {
   SEARCH_STRING,
   SHORTS_TOGGLE
 } from "../../utils/localStorageConstants";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Profile() {
+  const user = React.useContext(CurrentUserContext);
+  
   const loggOut = () => {
     localStorage.removeItem(SEARCH_STRING)
     localStorage.removeItem(SHORTS_TOGGLE)
@@ -20,7 +24,7 @@ function Profile() {
   return (
     <form className='profile'>
       <div className='profile__container'>
-        <h2 className='profile__header'>Привет, Елена!</h2>
+        <h2 className='profile__header'>Привет, {user.name}!</h2>
         <div className='profile__field'>
           <label className='profile__label' htmlFor='name'>
             Имя
