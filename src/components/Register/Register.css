@@ -30,7 +30,7 @@
 }
 
 .auth__welcome {
-  font-family: 'Inter';
+  font-family: "Inter";
 
   font-weight: 500;
   font-size: 24px;
@@ -45,7 +45,7 @@
 }
 
 .auth__input {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   width: 396px;
   height: 46px;
   margin: 0;
@@ -64,7 +64,6 @@
   color: red;
   font-size: 10px;
 }
-
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .auth__input {
@@ -113,7 +112,7 @@ fieldset {
 }
 
 .auth__text {
-  font-family: 'Inter';
+  font-family: "Inter";
 
   font-weight: 400;
   font-size: 14px;

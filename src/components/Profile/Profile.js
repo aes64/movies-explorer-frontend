@@ -1,52 +1,143 @@
-import React from 'react';
-import './Profile.css';
+import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router-dom";
+import "./Profile.css";
 import {
   AUTH_TOKEN,
-  CURRENT_USER, LIKED_MOVIES,
+  CURRENT_USER,
+  LIKED_MOVIES,
   SEARCH_RESULTS,
   SEARCH_STRING,
-  SHORTS_TOGGLE
+  SHORTS_TOGGLE,
 } from "../../utils/localStorageConstants";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation, validations } from "../../utils/formValidation";
+import mainApi from "../../utils/MainApi";
 
 function Profile() {
-  const user = React.useContext(CurrentUserContext);
-  
-  const loggOut = () => {
-    localStorage.removeItem(SEARCH_STRING)
-    localStorage.removeItem(SHORTS_TOGGLE)
-    localStorage.removeItem(SEARCH_RESULTS)
-    localStorage.removeItem(AUTH_TOKEN)
-    localStorage.removeItem(CURRENT_USER)
-    localStorage.removeItem(LIKED_MOVIES)
+  const history = useHistory();
+  const [updateError, setUpdateError] = useState("");
+  const [updateStatus, setUpdateStatus] = useState("");
+  const [user, setUser] = React.useContext(CurrentUserContext);
+  const userNameValidation = useCallback(
+    (value) => {
+      if (value === user.name) {
+        return {
+          isValid: false,
+          validationMessage: "поле name должно отличаться от существующего",
+        };
+      }
+      return validations["name"](value);
+    },
+    [user.name],
+  );
+  const emailValidation = useCallback(
+    (value) => {
+      if (value === user.email) {
+        return {
+          isValid: false,
+          validationMessage: "поле email должно отличаться от существующего",
+        };
+      }
+      return validations["email"](value);
+    },
+    [user.email],
+  );
 
-  }
+  const loggOut = () => {
+    localStorage.removeItem(SEARCH_STRING);
+    localStorage.removeItem(SHORTS_TOGGLE);
+    localStorage.removeItem(SEARCH_RESULTS);
+    localStorage.removeItem(AUTH_TOKEN);
+    localStorage.removeItem(CURRENT_USER);
+    localStorage.removeItem(LIKED_MOVIES);
+    setUser({});
+    history.push("/");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setUpdateError("");
+    setUpdateStatus("");
+    mainApi
+      .setNewProfileData({ ...user, ...data })
+      .then((newUser) => {
+        setUser(newUser);
+        setUpdateStatus("Обновление успешно");
+      })
+      .catch((e) => {
+        setUpdateError("Ошибка обновления");
+      });
+  };
+
+  const {
+    values: data,
+    handleChange,
+    errors,
+    isValid,
+  } = useFormWithValidation({
+    name: userNameValidation,
+    email: emailValidation,
+  });
   return (
-    <form className='profile'>
-      <div className='profile__container'>
-        <h2 className='profile__header'>Привет, {user.name}!</h2>
-        <div className='profile__field'>
-          <label className='profile__label' htmlFor='name'>
+    <form className="profile" onSubmit={handleSubmit}>
+      <div className="profile__container">
+        <h2 className="profile__header">Привет, {user.name}!</h2>
+        <div className="profile__field">
+          <label className="profile__label" htmlFor="name">
             Имя
           </label>
-          <input className='profile__input' name='name' id='name' />
+          <input
+            className="profile__input"
+            id="name"
+            name="name"
+            value={data.name}
+            onChange={handleChange}
+          />
         </div>
-        <div className='profile__border'></div>
-        <div className='profile__field'>
-          <label className='profile__label' htmlFor='email'>
+        {errors["name"] && (
+          <span className="profile__validaton-message" id="name">
+            {errors["name"]}
+          </span>
+        )}
+        <div className="profile__border"></div>
+        <div className="profile__field">
+          <label className="profile__label" htmlFor="email">
             E-mail
           </label>
           <input
-            className='profile__input'
-            type='email'
-            name='email'
-            id='email'
+            className="profile__input"
+            id="email"
+            name="email"
+            type="email"
+            value={data.email}
+            onChange={handleChange}
           />
         </div>
+        {errors["email"] && (
+          <span className="profile__validaton-message" id="name">
+            {errors["email"]}
+          </span>
+        )}
       </div>
-      <div className='profile__container'>
-        <button className='profile__button '>Редактировать</button>
-        <button className='profile__button profile__button-exit' onClick={loggOut}>
+      <div className="profile__container">
+        <button className="profile__button" type="submit" disabled={!isValid}>
+          Редактировать
+        </button>
+        {updateError && (
+          <span className="profile__update-message" id="name">
+            {updateError}
+          </span>
+        )}
+        {updateStatus && (
+          <span className="profile__update-message" id="name">
+            {updateStatus}
+          </span>
+        )}
+        <button
+          className="profile__button profile__button-exit"
+          type="button"
+          onClick={loggOut}
+        >
           Выйти из аккаунта
         </button>
       </div>

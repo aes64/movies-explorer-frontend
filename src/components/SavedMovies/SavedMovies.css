@@ -11,7 +11,7 @@
   .saved-movies__container {
     width: 678px;
     grid-template-columns: repeat(2, 1fr);
-    margin: 70px 30px 210px 30px;
+    margin: 70px auto;
     gap: 30px;
   }
 }
@@ -40,3 +40,4 @@
 .movie__button-delete:hover {
   opacity: 0.7;
 }
+

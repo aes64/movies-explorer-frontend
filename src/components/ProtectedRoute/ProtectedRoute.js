@@ -6,8 +6,12 @@ function ProtectedRoute({ component: Component, ...props }) {
   return (
     <Route>
       {() => {
-        if (props.loading) return <Preloader />
-        return props.loggedIn ? <Component {...props} /> : <Redirect to="/signin" />
+        if (props.loading) return <Preloader />;
+        return props.loggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/signin" />
+        );
       }}
     </Route>
   );

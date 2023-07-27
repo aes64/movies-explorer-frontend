@@ -1,53 +1,74 @@
-import React, {useMemo, useCallback, useState} from 'react';
-import './SavedMovies';
-import SearchForm from '../SearchForm/SearchForm';
-import {LIKED_MOVIES} from '../../utils/localStorageConstants'; 
-import MoviesCard from '../MoviesCard/MoviesCard';
+import React, { useMemo, useCallback, useState, useEffect } from "react";
+import "./SavedMovies";
+import SearchForm from "../SearchForm/SearchForm";
+import { LIKED_MOVIES } from "../../utils/localStorageConstants";
+import MoviesCard from "../MoviesCard/MoviesCard";
+
+const getMoviesFromLS = () => {
+  let res = [];
+  try {
+    res = JSON.parse(localStorage.getItem(LIKED_MOVIES)) || [];
+  } catch (e) {}
+  return res;
+};
 
 function SavedMovies() {
-  const likedMovies = useMemo(() => {
-    let res = [];
-    try {
-      res = JSON.parse(likedMoviesFromLS) || [];
-    } catch(e) {}
-    return res;
-  }, [likedMoviesFromLS]);
-  const [movies, setMovies] = (likedMovies);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const likedMoviesFromLS = localStorage.getItem(LIKED_MOVIES);
-  
-  const getLikeId = useCallback((id) => likedMovies.find(item => item.movieId === id)?._id, [likedMovies])
+  const likedMovies = useMemo(() => getMoviesFromLS(), []);
+  const [movies, setMovies] = useState(likedMovies);
+  const [searchString, setSearchString] = useState("");
+  const [toggleShorts, setToggleShorts] = useState(false);
 
-  const handleSearchMovie = () => {
-    setLoading(true);
-    setError('');
-    return movies.filter((item) => (item?.nameRU?.toLowerCase()?.includes(searchString?.toLowerCase()) || item?.nameEN?.toLowerCase()?.includes(searchString?.toLowerCase())))
-      .then((data) => {
-        if (!data?.length) {
-          setError('Ничего не найдено')
-        }
-        setMovies(data)
-      })
-      .catch(e => {
-        console.error(e)
-        setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-      })
-      .finally(() => {
-        setLoading(false)
-      });
+  const getLikeId = useCallback(
+    (id) => movies.find((item) => item._id === id)?._id,
+    [movies],
+  );
+  const removeById = useCallback(
+    (id) => {
+      setMovies(movies.filter((item) => item._id !== id));
+    },
+    [setMovies, movies],
+  );
+  const handleSearchMovie = useCallback(
+    (searchString) => {
+      setSearchString(searchString);
+    },
+    [setSearchString],
+  );
+  const handleCheckboxToggle = useCallback(
+    (nextValue) => {
+      setToggleShorts(nextValue);
+    },
+    [setToggleShorts],
+  );
+  let filteredMovies = movies;
+  if (searchString) {
+    filteredMovies = filteredMovies.filter(
+      (item) =>
+        item?.nameRU?.toLowerCase()?.includes(searchString?.toLowerCase()) ||
+        item?.nameEN?.toLowerCase()?.includes(searchString?.toLowerCase()),
+    );
+  }
+  if (toggleShorts) {
+    filteredMovies = filteredMovies.filter((item) => item?.duration <= 40);
   }
 
-  /*const handleCheckboxToggle = useCallback(() => {
-    setMovies(moviesApi.getDataFromLocalStorage());
-  }, [setMovies, moviesApi.getDataFromLocalStorage])
-  */
-
   return (
-    <section className='saved-movies'>
-      <SearchForm onSubmit={handleSearchMovie}/>
-      <div className='saved-movies__container'>
-        {likedMovies.map((movie) => <MoviesCard key={movie?.id} movie={movie} likeId={getLikeId(movie?.movieId)} likeType='cross'/>)}
+    <section className="saved-movies">
+      <SearchForm
+        onSubmit={handleSearchMovie}
+        handleCheckboxToggle={handleCheckboxToggle}
+        noLocalStorage
+      />
+      <div className="saved-movies__container">
+        {filteredMovies.map((movie) => (
+          <MoviesCard
+            key={movie?._id}
+            movie={movie}
+            likeId={getLikeId(movie?._id)}
+            removeById={removeById}
+            likeType="cross"
+          />
+        ))}
       </div>
     </section>
   );

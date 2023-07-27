@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 function getWindowWidth() {
   return window.innerWidth;
@@ -11,20 +11,20 @@ export function useResultSize() {
     let called = false;
     const updateDimension = () => {
       if (called === false) {
-        called = true
+        called = true;
         setTimeout(() => {
           called = false;
-          setWindowWidth(getWindowWidth())
-        }, 200)
+          setWindowWidth(getWindowWidth());
+        }, 200);
       }
-    }
+    };
 
-    window.addEventListener('resize', updateDimension);
+    window.addEventListener("resize", updateDimension);
 
-    return (() => {
-      window.removeEventListener('resize', updateDimension);
-    })
-  }, [windowWidth])
+    return () => {
+      window.removeEventListener("resize", updateDimension);
+    };
+  }, [windowWidth]);
 
   let resultSize = 12;
   if (windowWidth < 1024) {
