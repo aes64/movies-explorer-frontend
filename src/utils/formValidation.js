@@ -46,8 +46,8 @@ export const validations = {
   },
 };
 
-export function useFormWithValidation(validationFunctions = validations) {
-  const [values, setValues] = useState({});
+export function useFormWithValidation(validationFunctions = validations, initialData = {}) {
+  const [values, setValues] = useState(initialData);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(true);
 

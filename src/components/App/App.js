@@ -11,6 +11,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Error from "../Error/Error";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import UnProtectedRoute from "../UnProtectedRoute/UnProtectedRoute";
 import { AUTH_TOKEN } from "../../utils/localStorageConstants";
 import MainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -57,6 +58,12 @@ function App() {
     }
   }, [loggedIn]);
 
+  useEffect(() => {
+    if (!Object.values(currentUser).length) {
+      setLoggedIn(false);
+    }
+  }, [currentUser])
+
   return (
     <CurrentUserContext.Provider value={[currentUser, setCurrentUser]}>
       <div className="App">
@@ -64,12 +71,18 @@ function App() {
         <main>
           <Switch>
             <Route exact path="/" component={Main} />
-            <Route path="/signup">
-              <Register />
-            </Route>
-            <Route path="/signin">
-              <Login />
-            </Route>
+            <UnProtectedRoute
+              loggedIn={loggedIn}
+              loading={loading}
+              path="/signup"
+              component={Register}
+            />
+            <UnProtectedRoute
+              loggedIn={loggedIn}
+              loading={loading}
+              path="/signin"
+              component={Login}
+            />
             <ProtectedRoute
               loggedIn={loggedIn}
               loading={loading}

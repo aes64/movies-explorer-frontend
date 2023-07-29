@@ -60,6 +60,7 @@ function SavedMovies() {
         noLocalStorage
       />
       <div className="saved-movies__container">
+        {!filteredMovies.length && <span>{'Ничего не найдено'}</span>}
         {filteredMovies.map((movie) => (
           <MoviesCard
             key={movie?._id}

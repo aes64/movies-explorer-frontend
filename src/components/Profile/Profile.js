@@ -77,7 +77,8 @@ function Profile() {
   } = useFormWithValidation({
     name: userNameValidation,
     email: emailValidation,
-  });
+  }, { name: user.name, email: user.email });
+
   return (
     <form className="profile" onSubmit={handleSubmit}>
       <div className="profile__container">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Login";
 import mainApi from "../../utils/MainApi";
 import { useFormWithValidation } from "../../utils/formValidation";
@@ -10,7 +10,6 @@ function Login() {
     handleChange,
     errors,
   } = useFormWithValidation();
-  const history = useHistory();
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
     setError("");
@@ -18,7 +17,7 @@ function Login() {
     mainApi
       .signIn({ email: data.email, password: data.password })
       .then(() => {
-        history.push("/movies");
+        window.location.replace('/movies')
       })
       .catch((e) => {
         setError("Ошибка авторизации");
