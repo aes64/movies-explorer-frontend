@@ -11,7 +11,9 @@ const prettifyDuration = (duration) => {
   return [hours && hoursStr, minutes && minutesStr].filter(Boolean).join(" ");
 };
 
-function MoviesCard({ movie, likeId, likeType = "heart", removeById }) {
+
+function MoviesCard({ movie, likeId: _likeId, likeType = "heart", removeById }) {
+  const [likeId, setLikeId] = useState(_likeId);
   const [isLiked, setIsLiked] = useState(!!likeId);
   const handleClickLike = useCallback(() => {
     if (isLiked) {
@@ -25,8 +27,9 @@ function MoviesCard({ movie, likeId, likeType = "heart", removeById }) {
     } else {
       mainApi
         .setLikeMovie(movie)
-        .then(() => {
+        .then((res) => {
           setIsLiked(true);
+          setLikeId(res?._id);
         })
         .catch(() => {});
     }

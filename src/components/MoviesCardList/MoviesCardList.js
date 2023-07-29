@@ -28,7 +28,7 @@ function MoviesCardList({ movies }) {
     setTotalSize(totalSize + resultSize);
   }, [setPagedMovies, movies, pagedMovies, resultSize]);
   const showLoadMore = totalSize < movies.length;
-
+  console.log(likedMovies)
   return (
     <div className="movies-list">
       <div className="movies-card">

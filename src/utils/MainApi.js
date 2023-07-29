@@ -141,6 +141,7 @@ class MainApi {
         const currentLikes = JSON.parse(localStorage.getItem(LIKED_MOVIES));
         currentLikes.push(res);
         localStorage.setItem(LIKED_MOVIES, JSON.stringify(currentLikes));
+        return res;
       });
   }
 
