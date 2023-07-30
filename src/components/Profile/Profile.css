@@ -54,6 +54,27 @@
   padding-left: 5px;
 }
 
+.profile__validaton-message {
+  margin-top: 5px;
+  color: red;
+  font-size: 10px;
+  text-align: right;
+}
+
+.profile__update-message {
+  margin-top: 5px;
+  color: red;
+  font-size: 10px;
+  text-align: center;
+}
+
+.profile__update-message {
+  margin-top: 5px;
+  color: green;
+  font-size: 10px;
+  text-align: center;
+}
+
 @media screen and (max-width: 450px) {
   .profile__label {
     width: 130px;

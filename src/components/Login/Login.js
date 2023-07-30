@@ -1,46 +1,86 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import "./Login";
+import mainApi from "../../utils/MainApi";
+import { useFormWithValidation } from "../../utils/formValidation";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Login({ onSubmit }) {
+function Login() {
+  const { values: data, handleChange, errors } = useFormWithValidation();
+  const history = useHistory();
+  const [user, setUser] = React.useContext(CurrentUserContext);
+  const [error, setError] = useState("");
+  const handleSubmit = (e) => {
+    setError("");
+    e.preventDefault();
+    mainApi
+      .signIn({ email: data.email, password: data.password })
+      .then((res) => {
+        setUser(res);
+        history.push("/movies");
+      })
+      .catch((e) => {
+        setError("Ошибка авторизации");
+      });
+  };
 
   return (
-    <section className='auth'>
-      <div className='auth__container auth__container_indent'>
-        <Link to='/'>
-          <div className='logo logo_auth'></div>
+    <section className="auth">
+      <div className="auth__container auth__container_indent">
+        <Link to="/">
+          <div className="logo logo_auth"></div>
         </Link>
-        <h1 className='auth__welcome'>Рады видеть!</h1>
+        <h1 className="auth__welcome">Рады видеть!</h1>
       </div>
-      <section className='auth__section'>
-        <form className='auth__form'>
-          <fieldset className='auth__info'>
-            <label className='auth__label'>E-mail</label>
+      <section className="auth__section">
+        <form className="auth__form" onSubmit={handleSubmit} noValidate>
+          <fieldset className="auth__info">
+            <label className="auth__label">E-mail</label>
             <input
-              id='email-input'
-              className='auth__input'
-              type='text'
-              name='email'
+              id="email-input"
+              className="auth__input"
+              type="text"
+              name="email"
               required
+              value={data.email || ""}
+              onChange={handleChange}
             />
-            <label className='auth__label'>Пароль</label>
+            {errors["email"] && (
+              <span className="auth__validaton-message" id="email">
+                {errors["email"]}
+              </span>
+            )}
+            <label className="auth__label">Пароль</label>
             <input
-              id='password-input'
-              className='auth__input auth__input_type_password'
-              type='password'
-              name='password'
+              id="password-input"
+              className="auth__input auth__input_type_password"
+              type="password"
+              name="password"
               minLength={4}
               required
+              value={data.password || ""}
+              onChange={handleChange}
             />
+            {errors["password"] && (
+              <span className="auth__validaton-message" id="password">
+                {errors["password"]}
+              </span>
+            )}
           </fieldset>
           <button
-            className='auth__submit-button auth__submit-button_indent'
-            type='submit'
+            className="auth__submit-button auth__submit-button_indent"
+            type="submit"
           >
             Войти
           </button>
-          <p className='auth__text'>
-            Ещё не зарегистрированы?{' '}
-            <Link to='/signup' className='auth__link'>
+          {error && (
+            <div className="auth__validaton-message" id="email">
+              {error}
+            </div>
+          )}
+          <p className="auth__text">
+            Ещё не зарегистрированы?{" "}
+            <Link to="/signup" className="auth__link">
               Регистрация
             </Link>
           </p>

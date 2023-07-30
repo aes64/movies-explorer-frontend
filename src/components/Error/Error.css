@@ -12,6 +12,11 @@
   margin: 246px 0 5px 0;
 }
 
+.error__button {
+  border: none;
+  background-color: #FFF;
+}
+
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .error__404 {
     font-size: 80px;

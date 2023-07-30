@@ -8,13 +8,12 @@
   cursor: pointer;
   text-decoration: none;
   border-radius: 10px;
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
   min-width: 96px;
   min-height: 36px;
   align-items: center;
   justify-content: center;
   margin-right: 10px;
-
 }
 
 .nav-tab__item:last-child {
@@ -34,7 +33,7 @@
 .nav-tab {
   display: flex;
   justify-content: center;
-  margin-top: 427px
+  margin-top: 427px;
 }
 
 .nav-tab__container {
