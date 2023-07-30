@@ -28,7 +28,7 @@ function MoviesCardList({ movies }) {
     setTotalSize(totalSize + resultSize);
   }, [setPagedMovies, movies, pagedMovies, resultSize]);
   const showLoadMore = totalSize < movies.length;
-  console.log(likedMovies)
+
   return (
     <div className="movies-list">
       <div className="movies-card">
@@ -41,9 +41,11 @@ function MoviesCardList({ movies }) {
         ))}
       </div>
       <div className="movies__container">
-        {showLoadMore && <button className="movies__button-more" onClick={loadMore}>
-          Ещё
-        </button>}
+        {showLoadMore && (
+          <button className="movies__button-more" onClick={loadMore}>
+            Ещё
+          </button>
+        )}
       </div>
     </div>
   );

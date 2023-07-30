@@ -46,10 +46,14 @@ export const validations = {
   },
 };
 
-export function useFormWithValidation(validationFunctions = validations, initialData = {}) {
+export function useFormWithValidation(
+  validationFunctions = validations,
+  initialData = {},
+  initialValid = true,
+) {
   const [values, setValues] = useState(initialData);
   const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(initialValid);
 
   const handleChange = (event) => {
     const target = event.target;

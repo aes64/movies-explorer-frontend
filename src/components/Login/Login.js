@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Login";
 import mainApi from "../../utils/MainApi";
 import { useFormWithValidation } from "../../utils/formValidation";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Login() {
-  const {
-    values: data,
-    handleChange,
-    errors,
-  } = useFormWithValidation();
+  const { values: data, handleChange, errors } = useFormWithValidation();
+  const history = useHistory();
+  const [user, setUser] = React.useContext(CurrentUserContext);
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
     setError("");
     e.preventDefault();
     mainApi
       .signIn({ email: data.email, password: data.password })
-      .then(() => {
-        window.location.replace('/movies')
+      .then((res) => {
+        setUser(res);
+        history.push("/movies");
       })
       .catch((e) => {
         setError("Ошибка авторизации");

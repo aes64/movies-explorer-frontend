@@ -35,10 +35,10 @@ function SearchForm({
   );
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (!noLocalStorage) {
       localStorage.setItem(SEARCH_STRING, searchString);
     }
-    e.preventDefault();
     onSubmit(searchString);
   };
 

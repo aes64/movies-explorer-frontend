@@ -55,7 +55,7 @@ class MainApi {
       .then((result) => {
         if (result?.token) {
           localStorage.setItem(AUTH_TOKEN, result.token);
-          return;
+          return this.getInitialProfileData();
         }
         throw new Error("Ошибка в запросе");
       });

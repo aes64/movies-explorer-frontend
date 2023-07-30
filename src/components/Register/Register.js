@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Register";
 import mainApi from "../../utils/MainApi";
 import { useFormWithValidation } from "../../utils/formValidation";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Register() {
-  const {
-    values: data,
-    handleChange,
-    errors,
-  } = useFormWithValidation();
+  const { values: data, handleChange, errors } = useFormWithValidation();
+  const [user, setUser] = React.useContext(CurrentUserContext);
+  const history = useHistory();
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
     setError("");
     e.preventDefault();
     mainApi
       .signUp({ name: data.name, email: data.email, password: data.password })
-      .then(() => {
-        window.location.replace('/movies')
+      .then((res) => {
+        setUser(res);
+        history.push("movies");
       })
       .catch((e) => {
         setError("Ошибка регистрации");

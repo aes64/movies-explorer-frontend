@@ -74,10 +74,14 @@ function Profile() {
     handleChange,
     errors,
     isValid,
-  } = useFormWithValidation({
-    name: userNameValidation,
-    email: emailValidation,
-  }, { name: user.name, email: user.email });
+  } = useFormWithValidation(
+    {
+      name: userNameValidation,
+      email: emailValidation,
+    },
+    { name: user.name, email: user.email },
+    false,
+  );
 
   return (
     <form className="profile" onSubmit={handleSubmit}>
