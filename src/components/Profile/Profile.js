@@ -15,6 +15,7 @@ import mainApi from "../../utils/MainApi";
 
 function Profile() {
   const history = useHistory();
+  const [loading, setLoading] = useState("");
   const [updateError, setUpdateError] = useState("");
   const [updateStatus, setUpdateStatus] = useState("");
   const [user, setUser] = React.useContext(CurrentUserContext);
@@ -54,26 +55,12 @@ function Profile() {
     history.push("/");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setUpdateError("");
-    setUpdateStatus("");
-    mainApi
-      .setNewProfileData({ ...user, ...data })
-      .then((newUser) => {
-        setUser(newUser);
-        setUpdateStatus("Обновление успешно");
-      })
-      .catch((e) => {
-        setUpdateError("Ошибка обновления");
-      });
-  };
-
   const {
     values: data,
     handleChange,
     errors,
     isValid,
+    resetForm,
   } = useFormWithValidation(
     {
       name: userNameValidation,
@@ -82,6 +69,26 @@ function Profile() {
     { name: user.name, email: user.email },
     false,
   );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setUpdateError("");
+    setUpdateStatus("");
+    mainApi
+      .setNewProfileData({ ...user, ...data })
+      .then((newUser) => {
+        setUser(newUser);
+        resetForm(newUser, {}, false)
+        setUpdateStatus("Обновление успешно");
+      })
+      .catch((e) => {
+        setUpdateError("Ошибка обновления");
+      })
+      .finally(() => {
+        setLoading(false)
+      });
+  };
 
   return (
     <form className="profile" onSubmit={handleSubmit}>
@@ -125,7 +132,7 @@ function Profile() {
         )}
       </div>
       <div className="profile__container">
-        <button className="profile__button" type="submit" disabled={!isValid}>
+        <button className="profile__button" type="submit" disabled={!isValid || loading}>
           Редактировать
         </button>
         {updateError && (
